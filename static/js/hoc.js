@@ -181,6 +181,10 @@ var HOC = {
 			// Abort if we're still on the same card
 			if (card == HOC.deck.currentcard) return;
 
+			// Blur input fields once we leave the card with the input field
+			// Only on non-touch devices, as on touch devices we have to make sure we keep the card with the inpur field in view despite scrollintoview
+			if (!HOC.touch && (document.activeElement.nodeName.toLowerCase() == 'input' || document.activeElement.nodeName.toLowerCase() == 'textarea')) document.activeElement.blur();
+
 			// Tell deck to move to respective card
 			HOC.deck.moveto(card)
 		},
@@ -194,9 +198,8 @@ var HOC = {
 			// http://aleembawany.com/2009/02/11/tagname-vs-nodename/
 			if (target.nodeName.toLowerCase() != 'input' && target.nodeName.toLowerCase() != 'textarea') return;
 
-			// See if killing it solves the scrollintoview problem on touch devices
-			event.preventDefault();
-			console.log(event)
+			// Hide the cards that are not on the stack
+			HOC.deck.hidespread(event.type == 'blur')
 		},
 
 		// All resize related stuff
@@ -250,6 +253,9 @@ var HOC = {
 		// Timestamps & related values
 		lastmove: 0,
 		defaultvelocity: 300,
+
+		// Scrolling stuff
+		lastscrollpos: 0,
 
 		// DOM element ID
 		root: document.getElementById('deck'),
@@ -349,7 +355,24 @@ var HOC = {
 
 			// Reset lastmove timestamp
 			this.lastmove = HOC.util.now(); 
-		}
+		},
+
+		// Hide (or show again) parts of the deck
+		// We first needed this on touch browsers, that scrollintoview to top to "reveal" input fields, because the browser thinks that
+		// if they are on the fixed stack, this means that scrolltop needs to be 0. Instead of prevent it, we just hide the spread out cards.
+		hidespread: function(showagain) {
+			// Remember our lastscrollposition
+			if (!showagain) this.lastscrollposition = document.body.scrollTop;
+
+			// Return to our last scrollposition when we blur
+			if (showagain) document.body.scrollTop = this.lastscrollposition;			
+
+			// Go through our cards
+			for ( i = 0, l = this.cards.length; i < l; i++ ) {
+				// Change the property of all cards that are not stacked
+				if (this.cards[i].className.indexOf('stacked') == -1) this.cards[i].style.display = (showagain) ? 'block' : 'none';
+			}
+		}		
 	},
 
 	// Various utilities
