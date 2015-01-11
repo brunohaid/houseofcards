@@ -74,7 +74,14 @@ var HOC = {
 		this.util.register(document,'scroll',this.ui.scrollhandler);
 
 		// Add Resize event handler
-		this.util.register(window,'resize',this.ui.resize.handler);		
+		this.util.register(window,'resize',this.ui.resize.handler);	
+
+		// Add global focus & blur event handlers.
+		// This is especially important on touch devices, as they will attempt to scroll back to the top, 
+		// so that the fixed stack is in focus.
+		// These two need capture set to true, see https://developer.mozilla.org/en-US/docs/Web/Events/blur#Event_delegation
+		this.util.register(document,'blur',this.ui.focushandler,true);	
+		this.util.register(document,'focus',this.ui.focushandler,true);		
 	},
 
 	// Visual parts
@@ -176,6 +183,20 @@ var HOC = {
 
 			// Tell deck to move to respective card
 			HOC.deck.moveto(card)
+		},
+
+		// If we have any kind of focus or blur event
+		// This also fires if the tab/window is blurred or focussed, but we don't have a use case atm
+		focushandler: function(event) {
+			var target = event.target || event.srcElement;
+
+			// Only consider events on input or textarea fields
+			// http://aleembawany.com/2009/02/11/tagname-vs-nodename/
+			if (target.nodeName.toLowerCase() != 'input' && target.nodeName.toLowerCase() != 'textarea') return;
+
+			// See if killing it solves the scrollintoview problem on touch devices
+			event.preventDefault();
+			console.log(event)
 		},
 
 		// All resize related stuff
@@ -344,8 +365,11 @@ var HOC = {
 			capture = capture || false;
 
 			// Go through various implementations
+			// Ideally we have addEventlistener support
 			if (obj.addEventListener) obj.addEventListener(eventType.toLowerCase(), handler, capture);
+			// Try attachevent
 			else if (obj.attachEvent) obj.attachEvent('on'+eventType.toLowerCase(), handler);
+			// Fall back to onEvent 
 			else {
 				var et=eventType.toUpperCase();
 				if ((obj.Event) && (obj.Event[et]) && (obj.captureEvents)) obj.captureEvents(Event[et]);
