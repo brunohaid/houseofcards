@@ -314,7 +314,7 @@ var HOC = {
 					// Remove stacked CSS
 					card.className = card.className.replace(' stacked','');
 					// Set proper top distance
-					card.style.top = HOC.ui.height * (this.currentcard + 1);
+					card.style.top = HOC.ui.height * (this.currentcard + 1) + 'px';
 				} else {
 					// Remove 
 					card.className += ' stacked';	

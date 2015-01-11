@@ -1,4 +1,4 @@
-# houseofcards
+# House of Cards
 
 Simple landing page framework which doesn't scream "Look, i'm a bootstrap landing page like every other"
 
@@ -22,4 +22,4 @@ House of Cards doesn't have any external dependencies, uses global event event h
 
 ## Status
 
-We're working on a few mobile quiks but should be ready to use in early Feb 2015.
+It'snot ready for production yet as we're working on a few mobile quirks, but should be in early Feb 2015.

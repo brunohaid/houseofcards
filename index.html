@@ -1,22 +1,27 @@
 <html>
 	<head>
-		<title>The Caravanserai. Roam free.</title>
+		<title>House of Cards</title>
        	<meta name="description" content="A super-simple landing page framework that helps you focus on your key arguments and stand out from the crowd." />
         <meta name="keywords" content="landing page, bootstrap" />
         <!-- The basic House of Cards CSS -->
 		<link rel="stylesheet" href="static/css/hoc.css" type="text/css" />
-        <!-- The CSS for the demo contents, replace as you wish -->
+        <!-- The CSS for the demo contents, replace with your own css -->
 		<link rel="stylesheet" href="static/css/demo.css" type="text/css" />		
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 	</head>
 	<body>
 	<div id="deck">
 		<!-- Make sure there are no other DOM elemnts on this level except cards -->
-		<div class="card">
+		<!-- You can give each card as many classnames as you want in addition to 'card', the first one should always have the 'cover' classname as well -->
+		<!-- The only classname you shouldn't use is 'stacked', as it's reserved by the flipping logic -->
+		<div class="card cover">
+			<!-- You can fill each card with whatever content you want -->
 			This
 		</div>
 		<div class="card">
 			That
+			<!-- Cards should be designed literally from the bottom up, so if you keep the headline at the bottom it will be the first thing people see as they scroll to a new card -->
+			<div class="tagline">			
 		</div>		
 		<div class="card">
 			Something else
