@@ -22,4 +22,4 @@ House of Cards doesn't have any external dependencies, uses global event event h
 
 ## Status
 
-It'snot ready for production yet as we're working on a few mobile quirks, but should be in early Feb 2015.
+It's not ready for production yet, as we're working on a few touchdevice quirks, but should be in early Feb 2015.

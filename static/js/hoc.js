@@ -87,8 +87,8 @@ var HOC = {
 	// Visual parts
 	ui: {
 		// This values might change over time, thus we wrap it in functions
-		mini: function() { return (window.innerWidth < 481) },
-		midi: function() { return (window.innerWidth > 480 && window.innerWidth < 901) },
+		mini: function() { return (window.innerWidth < 681) },
+		midi: function() { return (window.innerWidth > 680 && window.innerWidth < 901) },
 
 		// Height of whatever space we use for the deck, most likely window, initially set to window.innerHeight
 		height: window.innerHeight,
